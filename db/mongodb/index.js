@@ -15,4 +15,14 @@ db.once('open', () => {
   console.log('Connected to db...');
 })
 
-module.exports.db = db
+var movieSchema = new mongoose.Schema({
+  id: {type : Number, unique : true},
+  title : String,
+  poster_path : String,
+  release_date : String,
+});
+
+var Movie = mongoose.model('Movie', movieSchema);
+
+module.exports.db = db;
+module.exports.Movie = Movie;

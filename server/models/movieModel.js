@@ -5,5 +5,22 @@ const sqlDb = require('../../db/sql');
 const mongoDb = require('../../db/mongodb')
 
 module.exports = {
-
+  save : ({movie}) => {
+    return mongoDb.Movie.findOneAndUpdate(
+      {id : movie.id},
+      {
+        id: movie.id,
+        title: movie.title,
+        poster_path : movie.poster_path,
+        release_date : movie.release_date
+      },
+      {upsert : true}
+    )
+  },
+  retrieve : ()=> {
+    return mongoDb.Movie.find().exec()
+  },
+  dropMovie : ({movie}) => {
+    return mongoDb.Movie.remove({id : movie.id})
+  } 
 }
