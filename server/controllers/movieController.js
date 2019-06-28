@@ -21,21 +21,24 @@ module.exports = {
     })
   },
   saveMovie: (req, res) => {
-   movieModel.save(req.body) //saving to DB with no issues
-    .then(()=> movieModel.retrieve())
-    .then(movies => res.send(movies))
-    .catch(()=>res.sendStatus(500))
+   movieModel.save(req.body) 
+   movieModel.retrieve((err,data) =>{
+    if (err) res.sendStatus(500)
+    else res.status(200).send(data)
+   })
   },
   deleteMovie: (req, res) => {
     movieModel.dropMovie(req.body)
-      .then(()=> movieModel.retrieve())
-      .then(movies => res.send(movies))
-      .catch(() => res.sendStatus(500))
+    movieModel.retrieve((err,data) =>{
+      if (err) res.sendStatus(500)
+      else res.status(200).send(data)
+     })
   },
   getFavorites: (req, res) => {
-    movieModel.retrieve(req.body)
-      .then(movies => res.send(movies))
-      .catch(()=> res.sendStatus(500))
+    movieModel.retrieve((err,data) =>{
+     if (err) res.sendStatus(500)
+     else res.status(200).send(data)
+    })
   }
 }
 
